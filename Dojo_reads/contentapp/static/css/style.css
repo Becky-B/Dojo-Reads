@@ -1,0 +1,12 @@
+.content li{
+    list-style-type: none;
+}
+.other_books li{
+    list-style-type: none;
+}
+.welcome_name{
+    color: cornflowerblue;
+}
+.created_at{
+    font-size: 10px;
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Info</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/user_info.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="col-sm">
+            <h4 class="welcome_name"><a href="/books">Home</a></h4>
+        </div>
+        <div class="col-sm-2">
+            <a href="/books/add">Add Book and Review</a>
+        </div>
+        <div class="col-sm-2">
+            <a href="/logout">Log Out</a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm mt-5">
+                <h4>User Alias: {{user.alias}}</h4>
+                <p>Name: {{user.name}}</p>
+                {% for review in reviews %}
+                <ul class="content mt-5">
+                    <li><a href="/books/{{review.book.id}}">{{review.book.title}}</a></li>
+                    <ul>
+                        <li>Rating: {{review.stars}} stars</li>
+                        <li>Review: {{review.words}}</li>
+                    </ul>
+
+                </ul>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

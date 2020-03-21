@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="col-sm">
+            <h4 class="welcome_name">Welcome, {{our_user.name}}!</h4>
+        </div>
+        <div class="col-sm-2">
+            <a href="books/add">Add Book and Review</a>
+        </div>
+        <div class="col-sm-2">
+            <a href="/logout">Log Out</a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-sm recents">
+                <h5>Recent Book Reviews:</h5>
+                <ul>
+                    {% for review in reviews reversed %}
+                    <div class="content mt-5">
+                        <li><a href="books/{{review.book.id}}">{{review.book.title}}</a></li>
+                        <ul>
+                            <li>Rating: {{review.stars}} stars</li>
+                            <li><a href="books/user/{{review.user.id}}">{{review.user.name}}</a> says: {{review.words}}
+                            </li>
+                            <li class="created_at font-italic mt-2"> created on: {{review.created_at}}</li>
+                        </ul>
+                        {% endfor %}
+                    </div>
+                </ul>
+            </div>
+            <div class="col-sm-4">
+                <h5>Other Books with Reviews:</h5>
+                <ul class="other_books">
+                    {% for review in reviews %}
+                    <li><a href="books/{{review.book.id}}">{{review.book.title}}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        <button class="button">Show All Books</button>
+        <div class="row">
+            <div class="col-sm mt-5 table_col">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Book Titles</th>
+                            <th scope="col">Author</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for book in books %}
+                        <tr>
+                            <td><a href="books/{{book.id}}">{{book.title}}</a></td>
+                            <td>{{book.author.name}}</td>
+                        <tr></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function(){
+            $(".recents").hide(100).show(1000);
+            $(".table").hide(0);
+            $(".button").hide(0).show(1000)
+
+            $('.button').click(
+                function() {
+                    $('.table').toggle(1000);
+
+                });
+            
+        });
+    </script>
+</body>
+
+</html>

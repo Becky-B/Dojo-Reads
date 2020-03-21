@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{book.title}}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/book_info.css' %}">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="col-sm text-right">
+            <a href="/books">Home</a>
+        </div>
+        <div class="col-sm-2">
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm mt-5">
+                <div>
+                    <h4>{{book.title}}</h4>
+                    <p>Author: {{book.author.name}}</p>
+                </div>
+            </div>
+        </div>        
+        <h5>Reviews:</h5>
+            <div class="row">
+                <div class="col-sm mt-3">
+                    <ul class="content">
+                        {% for info in book.review.all %}
+                        <li>Rating: {{info.stars}}</li>
+                        <ul>
+                            <li><a href="/books/user/{{info.user.id}}">{{info.user.name}}</a> says: {{info.words}}</li>
+                            <li class="created_at">{{info.created_at}}</li>
+                            <a href="delete/{{info.id}}/{{book.id}}"><button>Delete</button></a> 
+                        </ul>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="col-sm-4">
+                <h5>Add a Review:</h5>
+                <form action="review/{{book.id}}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="review_input">Review:</label>
+                        <textarea placeholder="Minimum of 10 characters." class="form-control" id="review_input" name="review" rows="7"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="star_input">Rating:</label>
+                        <select name="stars" id="star_input">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-secondary">Submit Review</button>                
+                </form>
+                <ul class="errors">
+                    {% for message in messages %}
+                    <li>{{message}}</li>
+                    {% endfor %}
+                </ul>
+                </div>
+        </div>
+</body>
+
+</html>

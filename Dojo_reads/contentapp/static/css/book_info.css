@@ -1,0 +1,6 @@
+.content li{
+    list-style-type: none;
+}
+.created_at{
+    font-size: 10px;
+}

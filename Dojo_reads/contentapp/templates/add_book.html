@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/add.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="col-sm text-right">
+            <a href="/books">Home</a>
+        </div>
+        <div class="col-sm-2">
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="header mr-0">
+            <h2 class="text-left">Add a New Book Title and Review</h2>
+                <div class="row">
+                    <ul class="errors">
+                        {% for message in messages %}
+                        <li>{{message}}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="row mr-0 ml-0">
+                <form action="add_book_review" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="title_input">Book Title:</label>
+                        <input class="form-control" id="title_input" name="title" type="text">
+                    </div>
+                    <div class="form-group">
+                        <h4>Author:</h4>
+                        <label for="author_input">Choose an author</label>
+                        <select name="author" class="form-control" id="author_input">
+                            {% for author in authors %}
+                            <option>{{author.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group"></div>
+                        <label for="add_author_input">Add an author</label>
+                        <input class="form-control" id="add_author_input" name="add_author" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="review_input">Review:</label>
+                        <textarea class="form-control" id="review_input" name="review" rows="7"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="star_input">Rating:</label>
+                        <select name="stars" id="star_input">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-secondary">Register</button>
+                </form>
+            </div>
+        </div> 
+    </div>       
+</body>
+</html>
